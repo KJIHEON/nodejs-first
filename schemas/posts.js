@@ -18,12 +18,13 @@ const postsSchema = new mongoose.Schema({ // 어떤 스키마에 넣을껀지
   content: {
     type: String
   },
-  createdAt:{
-    type: String
+  createdAt:{ //작성 날짜를 넣어주는 스키마
+    type: Date,
+    default:Date.now 
   }
 
   
 });
 
 
-module.exports = mongoose.model("posts", postsSchema); //호출시 스키마가 등록된다.
+module.exports = mongoose.model("Post", postsSchema); //호출시 스키마가 등록된다.

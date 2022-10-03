@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 
-app.use("/api",[postsRouter]);
+app.use([postsRouter]);
 
 
 app.listen(port,() =>{
