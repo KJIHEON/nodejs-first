@@ -21,7 +21,7 @@ const commentsSchema = new mongoose.Schema({
   createdAt: {
     type: Date
   },
-  
+
 });
 
 //밖에서도 쓸수 있게함 모듈을 이용
