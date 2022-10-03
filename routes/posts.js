@@ -21,9 +21,9 @@ router.post('/', async (req, res) => {   //post누르면 정보가 담겨있음
 //await Promise를 기다리기 위해 사용됩니다. 연산자는 async function 내부에서만 사용할 수 있습니다.
 
 router.get('/',async (req,res)=>{// get으로 데이터를 불러올꺼임
-  const posts = await Post.find(); //포스트(스키마).정보를 찾아와서 posts변수에 넣어줌 이게 바로 받아온다 굳이 맵 안써두됨!!!!
-  console.log(posts) //내림차순 추가하기
-  //  result.reverse() //최근에 쓴 순서대로 나오게함 
+   //포스트(스키마).정보를 찾아와서 posts변수에 넣어줌 이게 바로 받아온다 굳이 맵 안써두됨!!!!
+  // console.log(posts) //내림차순 추가하기
+  const posts = await Post.find().sort({ createdAt: "desc" }) ////내림차순 차을때 사용한다!!!!
     res.json({data : posts});//찾아온 정보를 data에 넣어서 보내준다    
   })
 
@@ -62,19 +62,19 @@ router.put("/:_postId", async (req, res) => {
 //게시물 지우기 비밀번호 적어서 해야함
 router.delete("/:_postId", async (req, res) => {
   const { _postId } = req.params; //아이디 정보를 받아온다 delete 누르면 작동함
-  const password  = req.body; //바디에 내가 적으면 여기에 뜸 정보수정할꺼
-  console.log(password)
+  const { password } = req.body; //바디에 내가 적으면 여기에 뜸 정보수정할꺼
+  // console.log(password)
   const posts = await Post.findOne({ _id : _postId }); //일치하는 포스트 아이디 값은
-  console.log(posts)
+  console.log(posts.password ,password)
   if (posts.password == password) { //pw가 일치하면 통과함
-  await Post.deleteOne({ _id }); //해당하는 아이디를 삭제해라
+  await Post.deleteOne({ _id : _postId }); //해당하는 아이디를 삭제해라
   }else { //한개를 삭제한다.
     return res.status(400).json({ //else문 쓸때 예외처리하기
     success: false,
     msg: "비밀번호가 일치하지 않습니다!",
     });
     }
-  res.json({"message":"게시글을 삭제하였습니다."});
+  res.json({"message":"게시글을 삭제하였습니다."}); //
 });
 
 
