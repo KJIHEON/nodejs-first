@@ -24,18 +24,30 @@ router.get('/',async (req,res)=>{// get으로 데이터를 불러올꺼임
    //포스트(스키마).정보를 찾아와서 posts변수에 넣어줌 이게 바로 받아온다 굳이 맵 안써두됨!!!!
   // console.log(posts) //내림차순 추가하기
   const posts = await Post.find().sort({ createdAt: "desc" }) ////내림차순 차을때 사용한다!!!!
-    res.json({data : posts});//찾아온 정보를 data에 넣어서 보내준다    
+  const post = posts.map((posts)=> {
+      return {  ///필요값만 보여주기 위함
+        postId : posts._id,
+        user : posts.user,
+        title : posts.title,
+        createdAt :posts.createdAt
+      }
+  })
+
+    res.json({data : post});//찾아온 정보를 data에 넣어서 보내준다    
   })
 
   //상세 페이지 조회
   router.get('/:_postId' ,async (req,res)=>{
     console.log(req.params)
     const { _postId } = req.params; //썬더에 입력하면 정보 받아옴
-    const posts = await Post.findOne({_id :_postId}); //Post.findOne({_id :_postId}), 아이디가 일치하는것을 찾아옴
-    //콘솔 찍어보기
-  res.json({data : posts}); 
-   //찾아온 정보를 data라는 리스트에 넣어서 보내준다    
-});
+    const postOne = await Post.findOne({_id :_postId}); //Post.findOne({_id :_postId}), 아이디가 일치하는것을 찾아옴
+   console.log(postOne)
+    console.log({ _postId :postOne._id})
+        res.json({ data: postOne})///필요값만 보여주기 위함
+      })
+
+
+
 
 
 // 게시글 수정하기 하기

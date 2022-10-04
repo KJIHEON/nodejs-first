@@ -4,13 +4,12 @@ const mongoose = require("mongoose");
 const postsSchema = new mongoose.Schema({ // 어떤 스키마에 넣을껀지 
   user: {
     type: String,
-    required: true,
-    unique: true
+    required: true, //필수 요소
+    unique: true ///하나만 가질수 있게함
   },
   password: {
     type: String,
     required: true,
-    unique: true
   },
   title: {
     type: String
