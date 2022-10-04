@@ -38,12 +38,20 @@ router.get('/',async (req,res)=>{// get으로 데이터를 불러올꺼임
 
   //상세 페이지 조회
   router.get('/:_postId' ,async (req,res)=>{
-    console.log(req.params)
+    // console.log(req.params)
     const { _postId } = req.params; //썬더에 입력하면 정보 받아옴
-    const postOne = await Post.findOne({_id :_postId}); //Post.findOne({_id :_postId}), 아이디가 일치하는것을 찾아옴
-   console.log(postOne)
-    console.log({ _postId :postOne._id})
-        res.json({ data: postOne})///필요값만 보여주기 위함
+    const postOne = await Post.find({_id :_postId}); //Post.findOne({_id :_postId}), 아이디가 일치하는것을 찾아옴
+    const post = postOne.map((posts)=> {
+      return {  ///필요값만 보여주기 위함
+        postId : posts._id,
+        user : posts.user,
+        title : posts.title,
+        content : posts.content,
+        createdAt :posts.createdAt
+      }
+    })
+    // console.log({ _postId :postOne._id})
+        res.json({ data: post})///필요값만 보여주기 위함
       })
 
 

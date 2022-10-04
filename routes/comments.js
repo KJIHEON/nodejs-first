@@ -45,10 +45,10 @@ router.put('/:_commentId', async (req,res)=>{//일단 아이디 받아오고 일
     res.json({'message': "댓글을 입력해주세요"});
   }else { 
     const comment = await comments.findOne({ _id: _commentId }); //아이디와 일치한 값을 코멘트에서 찾아옴 중복되면 한개만 쓰면됨 구조할당 분해 찾을수 있음//
-    await comments.updateOne({ _id : _commentId }, { $set: {password,content } }); //일치하면 _id를 찾아서  패스워드랑 콘텐트수정    
+    await comments.updateOne({ _id : _commentId }, { $set: {password,content } }); //일치하면 _id를 찾아서  패스워드랑 콘텐트수정
     res.json({data : comment})    
-    res.json({'message': "댓글을 수정했습니다"})
-}
+    res.json({'message': "댓글을 수정했습니다"})     
+}   
 })
 
 //해당 댓글 삭제
