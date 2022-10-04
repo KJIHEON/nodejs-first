@@ -15,15 +15,13 @@ const comments = require('../schemas/comments');
       res.json({'message': "댓글을 입력해주세요"});
     }else{                                                 //스키마 comments 아이디로 정보를 저장하고 만들어줌
       await comments.create({ _postId ,user , password, content, createdAt}); //스키마.db에 정보를 만들어준다
-     
       res.json({'message': "댓글을 생성하였습니다."});    //메세지 생성 제이슨 형식으로 응답해줌
     }
   })
 
   //해당 게시물 댓글 가져오기 해당 게시물 댓글만 가져온다
   router.get('/:_postId',async (req,res)=>{
- const { _postId } = req.params                                   //아이디 값을 받아온다
-                                                                  //파라미터로 받아온 아이디와 몽고디비에 저장된 아이디 중 일치하는것을 찾아서 가져온다.
+ const { _postId } = req.params                                   //아이디 값을 받아온다 //파라미터로 받아온 아이디와 몽고디비에 저장된 아이디 중 일치하는것을 찾아서 가져온다.                                                           
  const commentAll = await comments.find({_postId}).sort({createdAt: "desc" }) //.sort({ createdAt: "desc" }) createdAt기준으로 내림차순
  const comment = commentAll.map((comment)=> {                         ///필요한 요구값만 보여주기 위함
   return {  
