@@ -43,7 +43,7 @@ router.put("/:_postId", async (req, res) => {
   const { _postId } = req.params; //아이디 정보를 받아옴 내가 put누르면 정보가 담겨있음
   const { password, title, content} = req.body; //바디에 내가 적으면 여기에 뜸 헷갈리면 찍어보자
   const posts = await Post.findOne({ _id: _postId }); //중복되면 한개만 쓰면됨 구조할당 분해 찾을수 있음//
-  // console.log(posts)
+  // console.log(_postId)
   if (posts.password == password) { // pw워드가 일치하면 정보수정할수있게 
     await Post.updateOne({ _id : _postId }, { $set: {password,title, content } });
   }else { //한개를 업데이트 한다 {$set{password,title, content  }}
