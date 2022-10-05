@@ -65,7 +65,7 @@ router.delete('/:_commentId',async (req,res)=>{
   try{
       const { _commentId } = req.params;                              //아이디 정보를 받아온다 delete 누르면 작동함
       const { password } = req.body;                                 //바디에 내가 적으면 여기에 뜸 정보수정할꺼
-      const commnet = await comments.findOne({ _id : _commentId });   //일치하는 코멘트트 아이디 값을 찾음
+      const commnet = await comments.findOne({ _id : _commentId });   //일치하는 코멘트트 아이디 값을 찾음   
       if ( commnet.password == password){
       await comments.deleteOne({ _id : _commentId });               //해당하는 아이디를 삭제해라
       } else {                                                        //한개를 삭제한다.
