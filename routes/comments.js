@@ -60,7 +60,7 @@ router.put('/:_commentId', async (req,res)=>{    //일단 아이디 받아오고
       }   
 })
 
-//해당 댓글 삭제
+//해당 댓글 삭제..
 router.delete('/:_commentId',async (req,res)=>{
   try{
       const { _commentId } = req.params;                              //아이디 정보를 받아온다 delete 누르면 작동함
