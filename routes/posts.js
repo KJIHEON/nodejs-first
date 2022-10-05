@@ -12,9 +12,9 @@ const Post = require('../schemas/posts'); //폴더 밖에 나가서 경로를 �
 ///몽구스의 스키마를 이용하여몽고 디비에 저장 하기
 router.post('/', async (req, res) => {   //post누르면 정보가 담겨있음
   try{
-    const {uesr, password, title, content, } = req.body; //저장해야할 정보를 받아와서 변수에 등록시킨다. req.body에 정보가 들어있음
+    const {user, password, title, content, } = req.body; //저장해야할 정보를 받아와서 변수에 등록시킨다. req.body에 정보가 들어있음
     const createdAt = new Date(); //날짜 지정 yyyddmmm이거 쓰기 나중에 하자!!
-    await Post.create({ uesr, password, title, content,createdAt}); //스키마.db에 정보를 만들어준다  //앞에는 키값 : 벨류값
+    await Post.create({ user, password, title, content,createdAt}); //스키마.db에 정보를 만들어준다  //앞에는 키값 : 벨류값
     res.status(201).send({'message': "게시글을 생성하였습니다."});  //스키마 Post 아이디로 정보를 저장하고 만들어줌
    }catch(error){ //catch가 에러를 받는다.
     console.log(error)
@@ -86,7 +86,7 @@ router.put("/:_postId", async (req, res) => {
       msg: "비밀번호가 일치하지 않습니다!",
       });
     }
-  res.status(201).send({'message': "게시글을 수정하였습니다."})
+    res.status(201).send({'message': "게시글을 수정하였습니다."})
     }catch(error){ 
     console.log(error)
     res.status(400).send({'message': "작성실패error"}) 

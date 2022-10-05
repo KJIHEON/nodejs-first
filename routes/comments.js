@@ -19,16 +19,16 @@ const comments = require('../schemas/comments');
       }
     } catch(error){ //catch가 에러를 받는다.
       console.log(error)
-      res.status(400).send({'message': "댓글 불러오기 error"}) //에러 400 try catch try문 안에 에러가 나면 catch가 잡아줘서 에러문구를 보내준다.(서버가 꺼지지 않음)
+      res.status(400).send({'message': "댓글 작성 error"}) //에러 400 try catch try문 안에 에러가 나면 catch가 잡아줘서 에러문구를 보내준다.(서버가 꺼지지 않음)
     }   
   })
 
   //해당 게시물 댓글 가져오기 해당 게시물 댓글만 가져온다
   router.get('/:_postId',async (req,res)=>{
   try{
-      const { _postId } = req.params                                   //아이디 값을 받아온다 //파라미터로 받아온 아이디와 몽고디비에 저장된 아이디 중 일치하는것을 찾아서 가져온다.                                                           
-      const comments = await comments.find({_postId}).sort({createdAt: "desc" }) //.sort({ createdAt: "desc" }) createdAt기준으로 내림차순
-      const comment = comments.map((comment)=> {                     //map은 하나씩 순회하여 값을 복사해줌 [1,2,3,4,5] 배열로 반환된다.
+      const { _postId } = req.params    //아이디 값을 받아온다 //파라미터로 받아온 아이디와 몽고디비에 저장된 아이디 중 일치하는것을 찾아서 가져온다.                                                                                 
+      const commentAll = await comments.find({_postId}).sort({createdAt: "desc" }) //.sort({ createdAt: "desc" }) createdAt기준으로 내림차순
+      const comment = commentAll.map((comment)=> {                     //map은 하나씩 순회하여 값을 복사해줌 [1,2,3,4,5] 배열로 반환된다.
       return {  
       commentId : comment._id,
       user : comment.user,
@@ -38,7 +38,7 @@ const comments = require('../schemas/comments');
     res.status(201).json({ data: comment})
     } catch(error){ //catch가 에러를 받는다.
     console.log(error)
-    res.status(400).send({'message': "댓글 불러오기 error"}) //에러 400 try catch try문 안에 에러가 나면 catch가 잡아줘서 에러문구를 보내준다.(서버가 꺼지지 않음)
+    res.status(400).send({'message': "댓글 불러오기 error"}) 
     }
   })
 
@@ -50,14 +50,13 @@ router.put('/:_commentId', async (req,res)=>{    //일단 아이디 받아오고
       if (content == "") {                                                //content가 빈칸이면  메세지 출력
         res.json({'message': "댓글을 입력해주세요"});
         }else { 
-        const comment = await comments.findOne({ _id: _commentId }); //아이디와 일치한 값을 코멘트에서 찾아옴 중복되면 한개만 쓰면됨 구조할당 분해 찾을수 있음//
-        await comments.updateOne({ _id : _commentId }, { $set: {password,content } }); //일치하면 _id를 찾아서  패스워드랑 콘텐트수정
-        res.status(201).json({data : comment})    
+        // const comment = await comments.findOne({ _id: _commentId }); //아이디와 일치한 값을 코멘트에서 찾아옴 중복되면 한개만 쓰면됨 구조할당 분해 찾을수 있음//
+        await comments.updateOne({ _id : _commentId }, { $set: {password,content } }); //일치하면 _id를 찾아서  패스워드랑 콘텐트수정  
         res.status(400).send({'message': "댓글을 수정했습니다"})            
         }
       } catch(error){ //catch가 에러를 받는다.
         console.log(error)
-        res.status(400).send({'message': "댓글 불러오기 error"}) //에러 400 try catch try문 안에 에러가 나면 catch가 잡아줘서 에러문구를 보내준다.(서버가 꺼지지 않음)
+        res.status(400).send({'message': "댓글 수정하기 error"}) 
       }   
 })
 
@@ -78,7 +77,7 @@ router.delete('/:_commentId',async (req,res)=>{
       res.status(201).send({"message":"댓글을 삭제하였습니다."}); 
     } catch(error){ //catch가 에러를 받는다.
       console.log(error)
-      res.status(400).send({'message': "댓글 불러오기 error"}) //에러 400 try catch try문 안에 에러가 나면 catch가 잡아줘서 에러문구를 보내준다.(서버가 꺼지지 않음)
+      res.status(400).send({'message': "댓글 삭제하기 error"})
     }   
 })
 
