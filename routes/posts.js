@@ -9,8 +9,8 @@ const Post = require('../schemas/posts'); //폴더 밖에 나가서 경로를 �
 //  }  
 
 
-///몽구스의 스키마를 이용하여몽고 디비에 저장 하기
-router.post('/', async (req, res) => {   //post누르면 정보가 담겨있음
+//게시물 저장
+router.post('/', async (req, res) => {   //post누르면 정보가 담겨있음  ///몽구스의 스키마를 이용하여몽고 디비에 저장 하기
   try{
     const {user, password, title, content, } = req.body; //저장해야할 정보를 받아와서 변수에 등록시킨다. req.body에 정보가 들어있음
     const createdAt = new Date(); //날짜 지정 yyyddmmm이거 쓰기 나중에 하자!!
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {   //post누르면 정보가 담겨있음
 //포스트(스키마).정보를 찾아와서 posts변수에 넣어줌 이게 바로 받아온다 굳이 맵 안써두됨!!!!
 // console.log(posts) //내림차순 추가하기
 
-//게시글 불러오기 내림차순
+//게시글 조회 내림차순
 router.get('/',async (req,res)=>{// get으로 데이터를 불러올꺼임
   try{
   const posts = await Post.find().sort({ createdAt: "desc" }) ////내림차순 차을때 사용한다!!!! //.sort("-createdAt");
@@ -49,7 +49,7 @@ router.get('/',async (req,res)=>{// get으로 데이터를 불러올꺼임
 
   })
 
-  //상세 페이지 조회
+  //게시물 상세 페이지 조회
 router.get('/:_postId' ,async (req,res)=>{
   try{
        const { _postId } = req.params; //썬더에 입력하면 정보 받아옴
@@ -72,7 +72,7 @@ router.get('/:_postId' ,async (req,res)=>{
 
 
 
-// 게시글 수정하기 하기
+// 게시글 수정하기
 router.put("/:_postId", async (req, res) => {
   try{
       const { _postId } = req.params;                 //아이디 정보를 받아옴 내가 put누르면 정보가 담겨있음

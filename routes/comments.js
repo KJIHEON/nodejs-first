@@ -23,7 +23,7 @@ const comments = require('../schemas/comments');
     }   
   })
 
-  //해당 게시물 댓글 가져오기 해당 게시물 댓글만 가져온다
+  //해당 게시물 댓글 가져오기
   router.get('/:_postId',async (req,res)=>{
   try{
       const { _postId } = req.params    //아이디 값을 받아온다 //파라미터로 받아온 아이디와 몽고디비에 저장된 아이디 중 일치하는것을 찾아서 가져온다.                                                                                 
