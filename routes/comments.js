@@ -4,7 +4,7 @@ const router = express.Router();
 const comments = require('../schemas/comments');
 
 
-// 게시물 작성 
+// 댓글 작성 
 //포스트 아이디를 같이 집어넣어줘서 해당 게시글의 댓글이란걸 알수있음
   router.post('/:_postId', async (req,res)=>{
   try{
@@ -34,25 +34,25 @@ const comments = require('../schemas/comments');
       user : comment.user,
       content : comment.content,
       createdAt :comment.createdAt
-        }})
-    res.status(201).json({ data: comment})
+      }})
+       res.status(200).json({ data: comment})
     } catch(error){ //catch가 에러를 받는다.
-    console.log(error)
-    res.status(400).send({'message': "댓글 불러오기 error"}) 
+      console.log(error)
+      res.status(400).send({'message': "댓글 불러오기 error"}) 
     }
   })
 
 //해당 게시물의 댓글 수정해보기
 router.put('/:_commentId', async (req,res)=>{    //일단 아이디 받아오고 일치하는지 확인 해당 
   try{         
-      const { _commentId } = req.params                         //입력한 코멘트 아이디를 가져옴
-      const {password , content} =req.body                            //입력한 password와 content받아옴
-      if (content == "") {                                                //content가 빈칸이면  메세지 출력
+       const { _commentId } = req.params                         //입력한 코멘트 아이디를 가져옴
+       const {password , content} =req.body                            //입력한 password와 content받아옴
+       if (content == "") {                                                //content가 빈칸이면  메세지 출력
         res.json({'message': "댓글을 입력해주세요"});
         }else { 
         // const comment = await comments.findOne({ _id: _commentId }); //아이디와 일치한 값을 코멘트에서 찾아옴 중복되면 한개만 쓰면됨 구조할당 분해 찾을수 있음//
         await comments.updateOne({ _id : _commentId }, { $set: {password,content } }); //일치하면 _id를 찾아서  패스워드랑 콘텐트수정  
-        res.status(400).send({'message': "댓글을 수정했습니다"})            
+        res.status(201).send({'message': "댓글을 수정했습니다"})            
         }
       } catch(error){ //catch가 에러를 받는다.
         console.log(error)
@@ -74,7 +74,7 @@ router.delete('/:_commentId',async (req,res)=>{
       msg: "비밀번호가 일치하지 않습니다!",
       });
       }
-      res.status(201).send({"message":"댓글을 삭제하였습니다."}); 
+      res.status(200).send({"message":"댓글을 삭제하였습니다."}); 
     } catch(error){ //catch가 에러를 받는다.
       console.log(error)
       res.status(400).send({'message': "댓글 삭제하기 error"})
