@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const comments = require('../schemas/comments');
+const comments = require('../models/comments');
 
 
 // 댓글 작성 

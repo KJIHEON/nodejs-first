@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const Post = require('../schemas/posts'); //폴더 밖에 나가서 경로를 찾아서 ../넣음
+const Post = require('../models/posts'); //폴더 밖에 나가서 경로를 찾아서 ../넣음
 
 // try{실행할코드}catch(error){ //catch가 에러를 받는다.
 //   console.log(error)
